@@ -1,4 +1,4 @@
-Date,Time,"Physical Memory Used [MB]","Total CPU Usage [%]","Core Max [°C]","CPU Fan [RPM]","Read Rate [MB/s]","Write Rate [MB/s]","Read Rate [MB/s]","Write Rate [MB/s]","GPU Temperature [°C]","GPU D3D Usage [%]","GPU Fan [%]","Current DL rate [KB/s]","Current UP rate [KB/s]",
+Date,Time,"Ram Used","CPU Usage","CPU Temperature","CPU Fan","Read Rate SSD","Write Rate SSD","Read Rate HDD","Write Rate HDD","GPU Temperature","GPU Usage","GPU Fan","Download Rate","Upload Rate",
 12.6.2014,15:20:33.784,2013,3.9,31.0,953,0.000,0.053,0.000,0.012,31.0,0.1,48.0,0.000,0.000,
 12.6.2014,15:20:36.102,2013,1.7,32.0,952,0.000,0.003,0.000,0.000,31.0,0.0,48.0,0.590,0.000,
 12.6.2014,15:20:38.398,2013,1.8,32.0,951,0.000,0.001,0.000,0.007,31.0,0.0,48.0,1.378,0.000,
@@ -57,4 +57,4 @@ Date,Time,"Physical Memory Used [MB]","Total CPU Usage [%]","Core Max [°C]","CPU
 12.6.2014,15:22:41.249,2002,5.3,34.0,953,0.000,0.057,0.000,0.007,31.0,0.6,48.0,0.000,0.000,
 12.6.2014,15:22:43.569,2002,4.2,33.0,953,0.000,0.000,0.000,0.001,31.0,0.3,48.0,2.375,0.000,
 12.6.2014,15:22:45.890,2004,5.7,33.0,954,0.000,0.019,0.000,0.003,31.0,0.8,48.0,0.000,0.000,
-Date,Time,"Physical Memory Used [MB]","Total CPU Usage [%]","Core Max [°C]","CPU Fan [RPM]","Read Rate [MB/s]","Write Rate [MB/s]","Read Rate [MB/s]","Write Rate [MB/s]","GPU Temperature [°C]","GPU D3D Usage [%]","GPU Fan [%]","Current DL rate [KB/s]","Current UP rate [KB/s]",
+Date,Time,"Ram Used","CPU Usage","CPU Temperature","CPU Fan","Read Rate SSD","Write Rate SSD","Read Rate HDD","Write Rate HDD","GPU Temperature","GPU Usage","GPU Fan","Download Rate","Upload Rate",

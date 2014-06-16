@@ -1,29 +1,47 @@
 package brain;
 
+import java.util.HashMap;
+
+import exceptions.BrokenCSVFileException;
 import exceptions.EndOfCSVFileException;
 
-public class InformationLine {
+/**
+ * The InformationLine represents a single line in the csv file which is not a Headline.
+ * @author jonathanhasenburg
+ *
+ */
 
-	private String[] line;
+public class InformationLine {
 	
-	public InformationLine(String[] line) throws EndOfCSVFileException {
+	private HashMap<String, String> map = new HashMap<String, String>();
+	
+	public InformationLine(String[] line, Headline headline) throws EndOfCSVFileException, BrokenCSVFileException {
 		if (line == null) {
 			throw new EndOfCSVFileException("CSV File completely parsed");
 		}
-		this.line = line;
+		if (line.length != headline.getCount()) {
+			throw new BrokenCSVFileException("Could not create information line because " + line + "was shorter than " + headline.toString());
+		}
+		for (int i = 0; i < line.length; i++) {
+			map.put(headline.get(i), line[i]);
+		}
 	}
 	
+	/**
+	 * Returns the value with with the given key. Returns null if the value does not exist.
+	 * @param key
+	 * @return the above specified boolean
+	 */
+	public String getValue(String key) {
+		return map.get(key);
+	}
+	
+	/**
+	 * Returns all key values in the information line, separated by commas.
+	 * @return the above specified String
+	 */
 	@Override
 	public String toString() {
-		String out = "";
-		int i = 0;
-		for (String s : line) {
-			out += s;
-			i++;
-			if  (i < line.length - 1) {
-				out += ", ";
-			}
-		}
-		return out;
+		return map.toString();
 	}
 }

@@ -31,7 +31,7 @@ public class CSVTester {
 	@Test
 	public void test() {
 		Data data = new Data();
-		data.parseFile();
+		data.startUp();
 		System.out.println(data.toString());
 		fail("Not yet implemented");
 	}

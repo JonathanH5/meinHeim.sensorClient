@@ -98,12 +98,27 @@ public class Data {
 	}
 	
 	/**
+	 * Returns the information line from the index firstIndex to lastIndex.
+	 * @param firstIndex
+	 * @param lastIndex
+	 * @return The above specified information lines.
+	 */
+	public List<InformationLine> getInformationLines(int firstIndex, int lastIndex) throws IndexOutOfBoundsException{
+		List<InformationLine> r = new ArrayList<InformationLine>();
+		for (int i = firstIndex; i<=lastIndex; i++) {
+			r.add(lines.get(i));
+		}
+		return r;
+	}
+	
+	/**
 	 * Looks for new lines at the end of the file. Ignores the "headline" line at the end.
-	 * Return the count of new lines which were added to the data. Returns -1 if something went
-	 * wrong.
+	 * Array[0] Count of files which were added to the file. If something went wrong: 0
+	 * Array[1] Number of first new line
 	 * @return the above specified int
 	 */
-	public int readNewLines() {
+	public int[] readNewLines() {
+		int[] r = {-1, linesRead};
 		CSVParser csvParser = null;
 		try {
 			csvParser = new CSVParser(new FileInputStream(logPath));
@@ -112,10 +127,10 @@ public class Data {
 			}
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
-			return -1;
+			return r;
 		} catch (IOException e) {
 			e.printStackTrace();
-			return -1;
+			return r;
 		}
 		int count = 0;
 		while (true) {
@@ -131,13 +146,13 @@ public class Data {
 				break;
 			} catch (IOException e) {
 				e.printStackTrace();
-				return -1;
+				return r;
 			} catch (BrokenCSVFileException e1) {
-				e1.printStackTrace();
-				return -1;
+				return r;
 			}
 		}
-		return count;
+		r[2] = count;
+		return r;
 		
 	}
 	
@@ -166,7 +181,6 @@ public class Data {
 			e.printStackTrace();
 			return false;
 		} catch (BrokenCSVFileException e1) {
-			e1.printStackTrace();
 			return false;
 		}
 		return true;

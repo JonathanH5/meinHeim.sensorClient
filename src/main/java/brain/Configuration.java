@@ -13,7 +13,10 @@ public class Configuration {
 	private static Properties properties;
 	private static String logPath;
 
-	private static void loadProperties() {
+	/**
+	 * Loads the Configuratoin file.
+	 */
+	public static void loadProperties() {
 		properties = new Properties();
 		InputStream is = Configuration.class.getClassLoader().getResourceAsStream("config.properties");
 		try {

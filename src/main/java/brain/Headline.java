@@ -17,7 +17,7 @@ public class Headline {
 	
 	public Headline(String[] line) throws BrokenCSVFileException {
 		if (line == null) {
-			throw new BrokenCSVFileException("The delivered headline was null");
+			throw new BrokenCSVFileException("The delivered line for the new headline was null");
 		}
 		this.line = new ArrayList<String>();
 		for (String s : line) {

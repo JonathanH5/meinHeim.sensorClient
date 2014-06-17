@@ -7,6 +7,7 @@ import exceptions.EndOfCSVFileException;
 
 /**
  * The InformationLine represents a single line in the csv file which is not a Headline.
+ * The InformationLine has always the same amount of elements as the corresponing headline.
  * @author jonathanhasenburg
  *
  */
@@ -18,6 +19,9 @@ public class InformationLine {
 	public InformationLine(String[] line, Headline headline) throws EndOfCSVFileException, BrokenCSVFileException {
 		if (line == null) {
 			throw new EndOfCSVFileException("CSV File completely parsed");
+		}
+		if (headline == null) {
+			throw new BrokenCSVFileException("The given headline was null");
 		}
 		if (line.length != headline.getCount()) {
 			throw new BrokenCSVFileException("Could not create information line because " + line + "was shorter than " + headline.toString());

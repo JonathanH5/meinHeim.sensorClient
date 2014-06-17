@@ -27,10 +27,11 @@ public class HeadlineTest {
 	public void NullLineTest() {
 		String[] line = null;
 		try {
+			@SuppressWarnings("unused")
 			Headline h = new Headline(line);
-			assertFalse(h.hasValue("Bla"));
+			fail("Should not get that far");
 		} catch (BrokenCSVFileException e) {
-			assertSame(e.getMessage(), "The delivered headline was null");
+			assertSame(e.getMessage(), "The delivered line for the new headline was null");
 			return;
 		}
 		fail("The Headline should be broken because it got a null");

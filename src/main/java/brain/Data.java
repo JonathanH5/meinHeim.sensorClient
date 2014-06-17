@@ -1,6 +1,7 @@
 package brain;
 
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,6 +22,7 @@ public class Data {
 	private Headline headline;
 	private List<InformationLine> lines = new ArrayList<InformationLine>();
 	private String logPath;
+	private int linesRead = 1;
 
 	public static final String[] neededValues = {"Date", "Time"};
 	private static final String[] viableValues = {"Date", "Time", "Ram Used", "Ram Available", "CPU Usage", "CPU Temperature", "CPU Fan", "Read Rate SSD", "Write Rate SSD", "Read Rate SSD", "Write Rate SSD", "Read Rate HDD", "Write Rate HDD", "GPU Usage", "GPU Temperatur", "GPU Fan", "Download Rate", "Upload Rate"};
@@ -41,8 +43,12 @@ public class Data {
 		this.logPath = logPath;
 	}
 	
+	public void setLogPath(String logPath) {
+		this.logPath = logPath;
+	}
+	
 	/**
-	 * Parses the csv file and activates the Getter for all values if no needed values are missing.
+	 * Parses the csv file and fills the found values list if no needed values are missing.
 	 * @return
 	 */
 	public boolean startUp() {
@@ -75,7 +81,15 @@ public class Data {
 	}
 	
 	/**
-	 * Returns the informationLine at the given index.
+	 * Returns the count of saved information lines.
+	 * @return
+	 */
+	public int getInformationLineCount() {
+		return lines.size();
+	}
+	
+	/**
+	 * Returns the information line at the given index.
 	 * @param index
 	 * @return The above specified informationline.
 	 */
@@ -83,8 +97,50 @@ public class Data {
 		return lines.get(index);
 	}
 	
-	//TODO Create a copy first
-	//TODO Test whether file was already parsed
+	/**
+	 * Looks for new lines at the end of the file. Ignores the "headline" line at the end.
+	 * Return the count of new lines which were added to the data. Returns -1 if something went
+	 * wrong.
+	 * @return the above specified int
+	 */
+	public int readNewLines() {
+		CSVParser csvParser = null;
+		try {
+			csvParser = new CSVParser(new FileInputStream(logPath));
+			for (int i = 0; i < linesRead; i++) {
+				csvParser.getLine();
+			}
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+			return -1;
+		} catch (IOException e) {
+			e.printStackTrace();
+			return -1;
+		}
+		int count = 0;
+		while (true) {
+			try {
+				lines.add(new InformationLine(csvParser.getLine(), headline));
+				linesRead++;
+				count++;
+			} catch (EndOfCSVFileException e) {
+				lines.remove(lines.size()-1);
+				linesRead--;
+				count--;
+				System.err.println(e.getMessage());
+				break;
+			} catch (IOException e) {
+				e.printStackTrace();
+				return -1;
+			} catch (BrokenCSVFileException e1) {
+				e1.printStackTrace();
+				return -1;
+			}
+		}
+		return count;
+		
+	}
+	
 	/**
 	 * Parses the hole CSV file and fills the InformationLine List with data.
 	 * Returns true, if parsing worked
@@ -98,8 +154,10 @@ public class Data {
 			while (true) {
 				try {
 					lines.add(new InformationLine(csvParser.getLine(), headline));
+					linesRead++;
 				} catch (EndOfCSVFileException e) {
 					lines.remove(lines.size()-1);
+					linesRead--;
 					System.err.println(e.getMessage());
 					break;
 				}

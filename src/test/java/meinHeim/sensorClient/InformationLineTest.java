@@ -14,7 +14,7 @@ public class InformationLineTest {
 	@Test
 	public void emptyLineTest() {
 		String[] line = {};
-		String[] hline = {"CPU", "Date", "Time"};
+		String[] hline = {"CPU", "Date", "Time", ""};
 		try {
 			Headline h = new Headline(hline);
 			@SuppressWarnings("unused")
@@ -29,7 +29,7 @@ public class InformationLineTest {
 	
 	@Test
 	public void emptyHeadlineTest() {
-		String[] line = {"1", "5"};
+		String[] line = {"1", "5", ""};
 		String[] hline = {};
 		try {
 			Headline h = new Headline(hline);
@@ -46,7 +46,7 @@ public class InformationLineTest {
 	@Test
 	public void NullLineTest() {
 		String[] line = null;
-		String[] hline = {"CPU", "Date", "Time"};
+		String[] hline = {"CPU", "Date", "Time", ""};
 		try {
 			Headline h = new Headline(hline);
 			@SuppressWarnings("unused")
@@ -61,7 +61,7 @@ public class InformationLineTest {
 	
 	@Test
 	public void NullHeadlineTest() {
-		String[] line = {"5", "2", "mega"};
+		String[] line = {"5", "2", "mega", ""};
 		try {
 			@SuppressWarnings("unused")
 			InformationLine i = new InformationLine(line, null);
@@ -75,11 +75,12 @@ public class InformationLineTest {
 	
 	@Test
 	public void OneElementTest() {
-		String[] line = {"50"};
-		String[] hline = {"CPU"};
+		String[] line = {"50", ""};
+		String[] hline = {"CPU", ""};
 		try {
 			Headline h = new Headline(hline);
 			InformationLine i = new InformationLine(line, h);
+			assertEquals(1, i.getCount());
 			assertEquals(i.getValue("CPU"), "50");
 			assertNull(i.getValue("Date"));
 			assertEquals("{CPU=50}", i.toString());
@@ -92,11 +93,12 @@ public class InformationLineTest {
 	
 	@Test
 	public void ManyElementTest() {
-		String[] line = {"50", "Heute", "Jetzt"};
-		String[] hline = {"CPU", "Date", "Time"};
+		String[] line = {"50", "Heute", "Jetzt", ""};
+		String[] hline = {"CPU", "Date", "Time", ""};
 		try {
 			Headline h = new Headline(hline);
 			InformationLine i = new InformationLine(line, h);
+			assertEquals(3, i.getCount());
 			assertEquals(i.getValue("CPU"), "50");
 			assertEquals(i.getValue("Date"), "Heute");
 			assertEquals(i.getValue("Time"), "Jetzt");

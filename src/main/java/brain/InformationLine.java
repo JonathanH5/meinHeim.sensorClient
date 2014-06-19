@@ -23,10 +23,12 @@ public class InformationLine {
 		if (headline == null) {
 			throw new BrokenCSVFileException("The given headline was null");
 		}
-		if (line.length != headline.getCount()) {
-			throw new BrokenCSVFileException("Could not create information line because " + line + "was shorter than " + headline.toString());
+		
+		if (line.length -1 != headline.getCount()) {
+			throw new BrokenCSVFileException("Could not create information line because line length<" + line.length + ">was less than headline length<" + headline.getCount() + ">");
 		}
-		for (int i = 0; i < line.length; i++) {
+		//-1 because last element is "empty"
+		for (int i = 0; i < line.length - 1; i++) {
 			map.put(headline.get(i), line[i]);
 		}
 	}
@@ -38,6 +40,14 @@ public class InformationLine {
 	 */
 	public String getValue(String key) {
 		return map.get(key);
+	}
+	
+	/**
+	 * Returns the count of informationLine Strings.
+	 * @return the above specified int
+	 */
+	public int getCount() {
+		return map.size();
 	}
 	
 	/**

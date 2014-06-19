@@ -20,8 +20,9 @@ public class Headline {
 			throw new BrokenCSVFileException("The delivered line for the new headline was null");
 		}
 		this.line = new ArrayList<String>();
-		for (String s : line) {
-			this.line.add(s);
+		//-1 because last element is "empty"
+		for (int i = 0; i < line.length -1; i++) {
+			this.line.add(line[i]);
 		}
 	}
 

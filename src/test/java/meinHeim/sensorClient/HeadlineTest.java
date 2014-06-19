@@ -11,7 +11,7 @@ public class HeadlineTest {
 	
 	@Test
 	public void emptyLineTest() {
-		String[] line = {};
+		String[] line = {""};
 		try {
 			Headline h = new Headline(line);
 			assertFalse(h.hasValue("Bla"));
@@ -39,7 +39,7 @@ public class HeadlineTest {
 	
 	@Test
 	public void OneElementTest() {
-		String[] line = {"Bla"};
+		String[] line = {"Bla", ""};
 		try {
 			Headline h = new Headline(line);
 			assertTrue(h.hasValue("Bla"));
@@ -55,7 +55,7 @@ public class HeadlineTest {
 	
 	@Test
 	public void ManyElementTest() {
-		String[] line = {"Date", "TimeZone", "CPU"};
+		String[] line = {"Date", "TimeZone", "CPU", ""};
 		try {
 			Headline h = new Headline(line);
 			assertFalse(h.hasValue("Bla"));

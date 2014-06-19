@@ -8,8 +8,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import exceptions.BrokenCSVFileException;
-import exceptions.EndOfCSVFileException;
+import brain.Configuration;
 import brain.Data;
 import brain.InformationLine;
 
@@ -25,6 +24,7 @@ public class DataTest {
 
 	@Before
 	public void setUp() throws Exception {
+		Configuration.loadProperties();
 	}
 
 	@After
@@ -36,13 +36,24 @@ public class DataTest {
 		Data d = new Data();
 		assertTrue(d.startUp());
 		String[] s = {"12.6.2014","15:20:38.398","2013","1.8","32.0","951","0.000","0.001","0.000","0.007","31.0","0.0","48.0","1.378","0.000",""};
-		assertSame(s.length, d.getHeadline().getCount());
+		assertSame(d.getHeadline().getCount(), s.length - 1);
+		assertSame(s.length - 1, d.getFoundValues().size());
+		assertSame(58, d.getInformationLineCount());
+		assertEquals(0, d.readNewLines()[0]);
+		assertEquals(59, d.readNewLines()[1]);
+
 		try {
 			assertEquals(new InformationLine(s, d.getHeadline()).toString(), d.getInformationLine(2).toString().toString());
 		} catch (Exception e) {
 			e.printStackTrace();
 			fail("Unexpected Exception");
 		}
+	}
+	
+	@Test
+	public void constructorTest() {
+		Data d = new Data("src/test/resources/TestLog.CSV");
+		assertTrue(d.startUp());
 	}
 	
 	@Test

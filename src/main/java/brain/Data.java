@@ -22,10 +22,10 @@ public class Data {
 	private Headline headline;
 	private List<InformationLine> lines = new ArrayList<InformationLine>();
 	private String logPath;
-	private int linesRead = 1;
+	private int nextReadedNumber = 1;
 
 	public static final String[] neededValues = {"Date", "Time"};
-	private static final String[] viableValues = {"Date", "Time", "Ram Used", "Ram Available", "CPU Usage", "CPU Temperature", "CPU Fan", "Read Rate SSD", "Write Rate SSD", "Read Rate SSD", "Write Rate SSD", "Read Rate HDD", "Write Rate HDD", "GPU Usage", "GPU Temperatur", "GPU Fan", "Download Rate", "Upload Rate"};
+	private static final String[] viableValues = {"Date", "Time", "Ram Used", "Ram Available", "CPU Usage", "CPU Temperature", "CPU Fan", "Read Rate SSD", "Write Rate SSD", "Read Rate HDD", "Write Rate HDD", "GPU Usage", "GPU Temperature", "GPU Fan", "Download Rate", "Upload Rate"};
 	private List<String> foundValues = new ArrayList<String>();
 	
 	/**
@@ -113,16 +113,16 @@ public class Data {
 	
 	/**
 	 * Looks for new lines at the end of the file. Ignores the "headline" line at the end.
-	 * Array[0] Count of files which were added to the file. If something went wrong: 0
-	 * Array[1] Number of first new line
+	 * Array[0] Count of files which were added to the file. If something went wrong: -1
+	 * Array[1] Next readed line number
 	 * @return the above specified int
 	 */
 	public int[] readNewLines() {
-		int[] r = {-1, linesRead};
+		int[] r = {-1, nextReadedNumber};
 		CSVParser csvParser = null;
 		try {
 			csvParser = new CSVParser(new FileInputStream(logPath));
-			for (int i = 0; i < linesRead; i++) {
+			for (int i = 0; i < nextReadedNumber; i++) {
 				csvParser.getLine();
 			}
 		} catch (FileNotFoundException e) {
@@ -136,11 +136,11 @@ public class Data {
 		while (true) {
 			try {
 				lines.add(new InformationLine(csvParser.getLine(), headline));
-				linesRead++;
+				nextReadedNumber++;
 				count++;
 			} catch (EndOfCSVFileException e) {
 				lines.remove(lines.size()-1);
-				linesRead--;
+				nextReadedNumber--;
 				count--;
 				System.err.println(e.getMessage());
 				break;
@@ -151,7 +151,8 @@ public class Data {
 				return r;
 			}
 		}
-		r[2] = count;
+		r[0] = count;
+		r[1] = nextReadedNumber;
 		return r;
 		
 	}
@@ -169,10 +170,10 @@ public class Data {
 			while (true) {
 				try {
 					lines.add(new InformationLine(csvParser.getLine(), headline));
-					linesRead++;
+					nextReadedNumber++;
 				} catch (EndOfCSVFileException e) {
 					lines.remove(lines.size()-1);
-					linesRead--;
+					nextReadedNumber--;
 					System.err.println(e.getMessage());
 					break;
 				}
@@ -200,7 +201,7 @@ public class Data {
 				return false;
 			}
 		}
-		//Check wheather headline only has viable Values
+		//Check whether headline only has viable Values
 		for (int i = 0; i < headline.getCount(); i++) {
 			boolean found = false;
 			for (String s : viableValues) {

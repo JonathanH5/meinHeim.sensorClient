@@ -1,6 +1,6 @@
 package brain;
 
-import java.util.HashMap;
+import java.util.TreeMap;
 
 import exceptions.BrokenCSVFileException;
 import exceptions.EndOfCSVFileException;
@@ -14,7 +14,7 @@ import exceptions.EndOfCSVFileException;
 
 public class InformationLine {
 	
-	private HashMap<String, String> map = new HashMap<String, String>();
+	private TreeMap<String, String> map = new TreeMap<String, String>();
 	
 	public InformationLine(String[] line, Headline headline) throws EndOfCSVFileException, BrokenCSVFileException {
 		if (line == null) {

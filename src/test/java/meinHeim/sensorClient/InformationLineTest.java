@@ -103,7 +103,7 @@ public class InformationLineTest {
 			assertEquals(i.getValue("Date"), "Heute");
 			assertEquals(i.getValue("Time"), "Jetzt");
 			assertNull(i.getValue("GPU"));
-			assertEquals("{Time=Jetzt, Date=Heute, CPU=50}", i.toString());
+			assertEquals("{CPU=50, Date=Heute, Time=Jetzt}", i.toString());
 		} catch (BrokenCSVFileException e) {
 			fail("There was an unexpeted exception" + e.getMessage());
 		} catch (EndOfCSVFileException e) {

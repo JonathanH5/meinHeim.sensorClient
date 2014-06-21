@@ -52,8 +52,10 @@ public class Data {
 	 * @return
 	 */
 	public boolean startUp() {
-		boolean success;
-		success = parseFile();
+		boolean success = true;
+		if (parseFile()[0] == -1) {
+			success = false;
+		}
 		if (!success) {
 			return false;
 		}
@@ -159,11 +161,14 @@ public class Data {
 	
 	/**
 	 * Parses the hole CSV file and fills the InformationLine List with data.
-	 * Returns true, if parsing worked
-	 * @return boolean
+	 * Array[0] Count of files which were added to the file. If something went wrong: -1
+	 * Array[1] Next readed line number
+	 * @return the above specified int
 	 */
-	private boolean parseFile() {
+	private int[] parseFile() {
+		int[] r = {-1, nextReadedNumber};
 		CSVParser csvParser;
+		int count = 0;
 		try {
 			csvParser = new CSVParser(new FileInputStream(logPath));
 			headline = new Headline(csvParser.getLine());
@@ -171,20 +176,24 @@ public class Data {
 				try {
 					lines.add(new InformationLine(csvParser.getLine(), headline));
 					nextReadedNumber++;
+					count++;
 				} catch (EndOfCSVFileException e) {
 					lines.remove(lines.size()-1);
 					nextReadedNumber--;
+					count--;
 					System.err.println(e.getMessage());
 					break;
 				}
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
-			return false;
+			return r;
 		} catch (BrokenCSVFileException e1) {
-			return false;
+			return r;
 		}
-		return true;
+		r[0] = count;
+		r[1] = nextReadedNumber;
+		return r;
 	}
 	
 	/**

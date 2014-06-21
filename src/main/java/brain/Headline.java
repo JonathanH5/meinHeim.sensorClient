@@ -74,5 +74,9 @@ public class Headline {
 		}
 		return out;
 	}
+	
+	public String toJson() {
+		return "";
+	}
 
 }

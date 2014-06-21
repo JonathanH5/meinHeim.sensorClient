@@ -56,6 +56,10 @@ public class InformationLine {
 	 */
 	@Override
 	public String toString() {
-		return map.toString();
+		return map.toString() + "\n";
+	}
+	
+	public String toJson() {
+		return "";
 	}
 }

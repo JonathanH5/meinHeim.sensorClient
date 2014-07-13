@@ -100,7 +100,7 @@ public class InformationLineTest {
 			assertEquals(1, i.getCount());
 			assertEquals(i.getValue("CPU"), "50");
 			assertNull(i.getValue("Date"));
-			assertEquals("{CPU=50}", i.toString());
+			assertEquals("{CPU=50}\n", i.toString());
 		} catch (BrokenCSVFileException e) {
 			fail("There was an unexpeted exception" + e.getMessage());
 		} catch (EndOfCSVFileException e) {
@@ -120,7 +120,7 @@ public class InformationLineTest {
 			assertEquals(i.getValue("Date"), "Heute");
 			assertEquals(i.getValue("Time"), "Jetzt");
 			assertNull(i.getValue("GPU"));
-			assertEquals("{CPU=50, Date=Heute, Time=Jetzt}", i.toString());
+			assertEquals("{CPU=50, Date=Heute, Time=Jetzt}\n", i.toString());
 		} catch (BrokenCSVFileException e) {
 			fail("There was an unexpeted exception" + e.getMessage());
 		} catch (EndOfCSVFileException e) {

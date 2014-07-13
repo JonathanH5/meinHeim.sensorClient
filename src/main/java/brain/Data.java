@@ -42,8 +42,6 @@ public class Data {
 	private int nextReadedNumber = 1;
 
 	public static final String[] neededValues = {"Date", "Time"};
-	private static final String[] viableValues = {"Date", "Time", "Ram Used", "Ram Available", "CPU Usage", "CPU Temperature", "CPU Fan", "Read Rate SSD", "Write Rate SSD", "Read Rate HDD", "Write Rate HDD", "GPU Usage", "GPU Temperature", "GPU Fan", "Download Rate", "Upload Rate"};
-	private List<String> foundValues = new ArrayList<String>();
 	
 	/**
 	 * Creates a new Data object which reads the csv file specified in the config.properties.
@@ -76,19 +74,11 @@ public class Data {
 		if (!success) {
 			return false;
 		}
-		success = fillFoundValuesList();
+		success = checkViable();
 		if (!success) {
 			return false;
 		}
 		return success;
-	}
-	
-	/**
-	 * Returns all found values that are in the csv file.
-	 * @return the above specified String
-	 */
-	public List<String> getFoundValues() {
-		return foundValues;
 	}
 	
 	/**
@@ -214,36 +204,14 @@ public class Data {
 	}
 	
 	/**
-	 * Recognizes which values are found in the csv file. Returns true, if all needed Values are found.
-	 * Fills the found values list.
-	 * If there are values which are not allowed it returns false.
-	 * Returns false, if a needed value misses.
-	 * @return boolean
+	 * Checks wheather the CSV File is viable
+	 * @return
 	 */
-	private boolean fillFoundValuesList() {
+	private boolean checkViable() {
 		//Check whether headline contains all needed values
 		for (String s : neededValues) {
 			if (!headline.hasValue(s)) {
 				return false;
-			}
-		}
-		//Check whether headline only has viable Values
-		for (int i = 0; i < headline.getCount(); i++) {
-			boolean found = false;
-			for (String s : viableValues) {
-				if (headline.get(i).equals(s)) {
-					found = true;
-					break;
-				}
-			}
-			if (found == false) {
-				return false;
-			}
-		}
-		//Add all found Values to the list of found values
-		for (String s : viableValues) {
-			if (headline.hasValue(s)) {
-				foundValues.add(s);
 			}
 		}
 		return true;

@@ -54,7 +54,6 @@ public class DataTest {
 		assertTrue(d.startUp());
 		String[] s = {"12.6.2014","15:20:38.398","2013","1.8","32.0","951","0.000","0.001","0.000","0.007","31.0","0.0","48.0","1.378","0.000",""};
 		assertSame(d.getHeadline().getCount(), s.length - 1);
-		assertSame(s.length - 1, d.getFoundValues().size());
 		assertSame(58, d.getInformationLineCount());
 		assertEquals(0, d.readNewLines()[0]);
 		assertEquals(59, d.readNewLines()[1]);
@@ -86,13 +85,6 @@ public class DataTest {
 		d.setLogPath("src/test/resources/NotNeededValues.CSV");
 		assertFalse(d.startUp());
 		
-	}
-	
-	@Test
-	public void notSupportedAttributeCSV() {
-		Data d = new Data();
-		d.setLogPath("src/test/resources/NotSupportedAttribute.CSV");
-		assertFalse(d.startUp());
 	}
 
 }
